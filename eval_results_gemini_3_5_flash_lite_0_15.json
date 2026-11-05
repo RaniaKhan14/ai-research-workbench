@@ -1,0 +1,713 @@
+[
+  {
+    "input": "What is the main idea of the Transformer, and how does it differ from earlier sequence transduction models?",
+    "actual_output": "**Main idea of the Transformer**\n\nThe Transformer is a *pure‑attention* architecture for sequence‑to‑sequence (transduction) tasks.  \nInstead of building representations with recurrent or convolutional layers, every layer in the model\ncomputes its output by applying **self‑attention** (and, in the decoder, encoder‑decoder attention).  \nKey components are:\n\n1. **Multi‑head scaled‑dot‑product attention** – each token can attend to every other token in the same\n   sequence (or to the encoder’s output in the decoder) in parallel.  \n2. **Positional encodings** – a fixed (sinusoidal) or learned positional signal is added to the token\n   embeddings so that the model can still use the order of the sequence.  \n3. **Feed‑forward sub‑layers** – simple position‑wise MLPs applied after each attention block.  \n4. **Layer‑wise residual connections and layer‑norm** – to ease training of very deep stacks.\n\nBecause all operations are *parallelizable* across the sequence, the Transformer can be trained\nmuch faster and scales better to long sequences than models that rely on sequential processing.\n\n---\n\n**How it differs from earlier sequence‑transduction models**\n\n| Aspect | Earlier models (RNN/CNN‑based) | Transformer |\n|--------|------------------------------|-------------|\n| **Core computation** | Recurrent (LSTM/GRU) or convolutional layers that process tokens one after another (or in fixed‑size windows). | Self‑attention layers that compute all pairwise interactions in one step. |\n| **Parallelism** | Limited: each time step depends on the previous one, so training is sequential. | Fully parallel across the sequence; all tokens are processed simultaneously. |\n| **Long‑range dependencies** | Handled indirectly through hidden states or large receptive fields; often difficult to capture. | Directly modeled by attention weights between any two positions. |\n| **Parameter sharing** | Usually a single recurrent cell or a few convolutional filters. | Each attention head and feed‑forward layer is independent; the same set of layers is stacked many times. |\n| **Training efficiency** | Slower due to sequential nature; memory usage grows with sequence length. | Faster and more memory‑efficient; can handle longer sequences in a single batch. |\n| **Performance** | State‑of‑the‑art on many tasks, but still limited by recurrence or convolution. | Outperforms previous models on machine translation, language modeling, and other tasks while being simpler to implement. |\n\nIn short, the Transformer replaces the *sequence‑aligned* recurrence or convolution with a *global, attention‑based* mechanism, enabling full parallelization, easier modeling of long‑range dependencies, and improved performance on a wide range of sequence‑transduction problems.",
+    "expected_output": "The Transformer is a sequence transduction model based solely on attention mechanisms. It dispenses entirely with the recurrence and convolutions used by earlier encoder-decoder models, which makes it more parallelizable and quicker to train while giving better translation quality.",
+    "success": false,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 15,
+    "retrieval_context_unique_chunks": 6,
+    "retrieval_context_chars": 14675,
+    "route": "retrieve",
+    "retrieval_attempts": 3,
+    "rewrite_count": 0,
+    "is_relevant": null,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 0.7650793650793649,
+        "passed": true,
+        "reason": "The score is 0.77 because most relevant nodes are ranked near the top, such as the first node which explains that 'the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions'. However, the score is not higher because several irrelevant nodes, like the fourth node discussing 'It discusses the specific applications of multi-head attention rather than the main idea and differences from earlier models' and the fifth node describing 'It lists author contributions and task generalization, which is not relevant to the core question', are ranked ahead of later relevant nodes."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all sentences in the expected output are fully supported by the node(s) in retrieval context, with sentence 1 mapped to the 1st node and sentence 2 mapped to both the 1st and 3rd nodes. Excellent job!"
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0.6229508196721312,
+        "passed": false,
+        "reason": "The score is 0.62 because while the context successfully includes relevant statements like 'The Transformer is the first transduction model relying entirely on self-attention', it also contains a significant amount of irrelevant information such as 'Provided proper attribution is provided, Google hereby grants permission to reproduce the tables and figures'."
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output directly and comprehensively addresses the input by explaining the main idea of the Transformer and its differences from earlier sequence transduction models without including any irrelevant information."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output is completely faithful to the retrieval context with no contradictions found. Great job!"
+      }
+    ],
+    "evaluation_complete": true
+  },
+  {
+    "input": "How many layers do the encoder and the decoder of the base Transformer have?",
+    "actual_output": "The base Transformer uses **6 layers in both the encoder and the decoder**.",
+    "expected_output": "Both the encoder and the decoder are stacks of N = 6 identical layers.",
+    "success": false,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 11,
+    "retrieval_context_unique_chunks": 5,
+    "retrieval_context_chars": 8705,
+    "route": "retrieve",
+    "retrieval_attempts": 3,
+    "rewrite_count": 0,
+    "is_relevant": null,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 0.5821428571428572,
+        "passed": false,
+        "reason": "The score is 0.58 because while relevant nodes containing 'The encoder is composed of a stack of N = 6 identical layers.' and 'The decoder is also composed of a stack of N = 6 identical layers.' are successfully retrieved at ranks 1, 4, 7, and 10, the score is not higher due to the presence of multiple irrelevant nodes interspersed throughout the rankings, such as the second node which 'discusses applications of attention and does not mention the number of layers in the encoder or decoder' and the third node which 'describes the mapping function of the encoder and decoder but does not state the number of layers'."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all information regarding the encoder and decoder layers in the expected output is fully and accurately supported by node 1 and node 10 in the retrieval context."
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0.19444444444444445,
+        "passed": false,
+        "reason": "The score is 0.19 because while the context briefly touches upon relevant statements such as 'The encoder is composed of a stack of N = 6 identical layers.' and 'The decoder is composed of a stack of N = 6 identical layers.', it is largely filled with irrelevant details about sub-layers, attention mechanisms, and training performance, as noted by statements like 'The Transformer uses multi-head attention in three different ways' and 'Training took 3.5 days on 8 P100 GPUs.'"
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output directly and accurately addresses the input without containing any irrelevant statements."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output aligns perfectly with the retrieval context without any contradictions."
+      }
+    ],
+    "evaluation_complete": true
+  },
+  {
+    "input": "What are the two sub-layers in each encoder layer, and what is applied around them?",
+    "actual_output": "In each encoder layer the paper specifies two sub‑layers:\n\n1. **Multi‑head self‑attention**  \n2. **Position‑wise fully‑connected feed‑forward network**\n\nAround each of these sub‑layers the model uses a **residual (skip) connection** followed by **layer‑normalization**. Thus the output of a sub‑layer is computed as  \n\n\\[\n\\text{LayerNorm}\\big(x + \\text{Sublayer}(x)\\big)\n\\]\n\nwhere “Sublayer” is either the self‑attention or the feed‑forward network.",
+    "expected_output": "Each encoder layer has a multi-head self-attention sub-layer and a simple position-wise fully connected feed-forward network. A residual connection is placed around each of the two sub-layers, followed by layer normalization.",
+    "success": false,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 4,
+    "retrieval_context_unique_chunks": 4,
+    "retrieval_context_chars": 3180,
+    "route": "retrieve",
+    "retrieval_attempts": 1,
+    "rewrite_count": 0,
+    "is_relevant": true,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the first node in the retrieval contexts correctly answers the question by stating 'Each layer has two sub-layers... We employ a residual connection around each of the two sub-layers, followed by layer normalization.', while the subsequent irrelevant nodes correctly appear lower in the rankings, such as the second node which discusses 'the decoder stack and its third sub-layer', the third node which 'does not provide the specific answer about the two sub-layers', and the fourth node which 'describes how the encoder maps an input sequence'."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all sentences in the expected output are fully supported by the 1st node in the retrieval context."
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0.35,
+        "passed": false,
+        "reason": "The score is 0.35 because while the context includes relevant statements like 'Each layer has two sub-layers: a multi-head self-attention mechanism and a position-wise fully connected feed-forward network' and 'We employ a residual connection around each of the two sub-layers, followed by layer normalization', it is heavily diluted by irrelevant information such as 'The encoder is composed of a stack of N = 6 identical layers' and 'An attention function can be described as mapping a query and a set of key-value pairs to an output'."
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the output directly and accurately addresses the input without including any irrelevant information. Great job!"
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output is completely faithful to the retrieval context with no contradictions found. Great job!"
+      }
+    ],
+    "evaluation_complete": true
+  },
+  {
+    "input": "What extra sub-layer does the decoder have, and why is masking used in decoder self-attention?",
+    "actual_output": "**Extra sub‑layer in the decoder**\n\nThe decoder stack contains **three** sub‑layers per layer:\n\n1. **Masked self‑attention** over the decoder’s own previous outputs.  \n2. **Multi‑head attention over the encoder’s output** (the “encoder‑decoder attention” layer).  \n3. **Position‑wise feed‑forward network**.\n\nThus, the decoder’s extra sub‑layer, compared to the encoder, is the **multi‑head attention that attends to the encoder’s output**.\n\n**Why masking is used in decoder self‑attention**\n\nDuring training and inference the decoder must generate the target sequence one token at a time (auto‑regressive decoding). To preserve this property, the self‑attention in the decoder is **masked** so that a position \\(i\\) can attend only to positions \\(\\le i\\). The mask sets the attention scores for future positions to \\(-\\infty\\) before the softmax, effectively zeroing them out. This ensures that the prediction for token \\(i\\) depends only on the already‑generated tokens (positions \\(< i\\)) and not on any future tokens, maintaining the correct causal structure of the model.",
+    "expected_output": "The decoder inserts a third sub-layer that performs multi-head attention over the output of the encoder stack. Self-attention in the decoder is masked, together with offsetting the output embeddings by one position, so that the prediction for position i can depend only on known outputs at positions before i. This preserves the auto-regressive property.",
+    "success": false,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 3,
+    "retrieval_context_unique_chunks": 3,
+    "retrieval_context_chars": 2807,
+    "route": "retrieve",
+    "retrieval_attempts": 1,
+    "rewrite_count": 0,
+    "is_relevant": true,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all relevant nodes containing the information about the decoder's extra sub-layer and masking (\"The text directly states that 'the decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack' and mentions the masking to ensure 'predictions for position i can depend only on the known outputs at positions less than i'.\" and \"The text further elaborates on masking to 'prevent leftward information flow in the decoder to preserve the auto-regressive property'.\") are perfectly ranked above the irrelevant node (\"This document discusses positional embeddings and compares self-attention to recurrent and convolutional layers, which is not relevant to the decoder's extra sub-layer or masking.\") at rank 3."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all sentences in the expected output are fully supported by information found across the 1st and 2nd nodes in the retrieval context, ensuring complete recall!"
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0.5555555555555556,
+        "passed": false,
+        "reason": "The score is 0.56 because while the context successfully includes relevant statements such as 'The decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack' and explains masking, it also introduces substantial irrelevant noise, such as discussing 'learned positional embeddings' and 'total computational complexity per layer'."
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 0.9090909090909091,
+        "passed": true,
+        "reason": "The score is 0.91 because the response successfully addressed the query regarding masking in decoder self-attention, but it was slightly penalized due to an inaccurate and irrelevant statement about the decoder's sub-layers."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output is completely faithful to the retrieval context with no contradictions detected. Great job!"
+      }
+    ],
+    "evaluation_complete": true
+  },
+  {
+    "input": "What is scaled dot-product attention, and why are the dot products divided by the square root of d_k?",
+    "actual_output": "**Scaled dot‑product attention** is the core attention mechanism used in the Transformer.  \nGiven a set of *queries* \\(Q\\), *keys* \\(K\\) and *values* \\(V\\) (each a matrix whose rows are the vectors for a particular position in the sequence), the attention output is computed as\n\n\\[\n\\text{Attention}(Q,K,V)=\\operatorname{softmax}\\!\\left(\\frac{QK^{\\top}}{\\sqrt{d_k}}\\right)V .\n\\]\n\n* The matrix product \\(QK^{\\top}\\) produces a score for every query–key pair.  \n* The softmax turns those scores into a probability distribution (the attention weights).  \n* Multiplying the weights by \\(V\\) gives a weighted sum of the values, which is the output of the attention layer.\n\n---\n\n### Why divide by \\(\\sqrt{d_k}\\)?\n\n* **Variance of the dot product** – If the components of a query \\(q\\) and a key \\(k\\) are independent random variables with mean 0 and variance 1, then the dot product \\(q\\!\\cdot\\!k = \\sum_{i=1}^{d_k} q_i k_i\\) has mean 0 and variance \\(d_k\\).  \n  As \\(d_k\\) grows, the dot products become larger in magnitude.\n\n* **Softmax saturation** – Large‑magnitude logits push the softmax into its extreme tails, where the gradients become extremely small. This makes learning difficult and slows convergence.\n\n* **Scaling restores a stable scale** – Dividing by \\(\\sqrt{d_k}\\) normalises the dot‑product scores so that their variance is roughly 1, regardless of the dimensionality. This keeps the softmax in a region with useful gradients and prevents the attention weights from becoming overly peaked.\n\nThus, the scaling factor \\(1/\\sqrt{d_k}\\) is a simple but essential trick that stabilises training and allows the Transformer to use high‑dimensional key/query vectors without suffering from vanishing gradients in the softmax.",
+    "expected_output": "Scaled dot-product attention computes softmax(QK^T / sqrt(d_k)) V, where Q, K and V are the queries, keys and values. The dot products are scaled by 1/sqrt(d_k) because, for large d_k, they grow large in magnitude and push the softmax function into regions with extremely small gradients.",
+    "success": false,
+    "evaluation_complete": true,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 15,
+    "retrieval_context_unique_chunks": 5,
+    "retrieval_context_chars": 11829,
+    "route": "retrieve",
+    "retrieval_attempts": 3,
+    "rewrite_count": 0,
+    "is_relevant": null,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 0.7918100418100419,
+        "passed": true,
+        "reason": "The score is 0.79 because the first three retrieval context nodes successfully provide relevant information about scaled dot-product attention and why dot products are scaled by 1/sqrt(dk) due to \"large values of dk, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients\", the formula \"Attention(Q, K, V) = softmax(QK^T / sqrt(d_k))V\", and definitions of query and key dimensions. However, the score is not higher because irrelevant nodes such as the fourth retrieval context node, which \"discusses positional embeddings and Table 3 results, which are not relevant to the definition of scaled dot-product attention\", are incorrectly ranked above later relevant nodes."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all sentences in the expected output are fully supported by the 3rd and 1st nodes in the retrieval context."
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0.5098039215686274,
+        "passed": false,
+        "reason": "The score is 0.51 because while the context contains helpful information such as 'We suspect that for large values of dk, the dot products grow large in magnitude... and to counteract this effect, we scale the dot products by the square root of dk', it also includes a significant amount of irrelevant content regarding 'Multi-Head Attention' and 'Additive attention computes the compatibility function using a feed-forward network'."
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the output directly and comprehensively answers both parts of the input without any irrelevant statements."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output aligns perfectly with the retrieval context without any contradictions."
+      }
+    ]
+  },
+  {
+    "input": "How many attention heads does the base model use, and what is the dimension of each head?",
+    "actual_output": "The base Transformer model uses **8 attention heads**.  \nEach head operates in a sub‑space of dimension **64** (i.e., \\(d_k = d_v = 64\\)).",
+    "expected_output": "The base model uses h = 8 parallel attention heads. Each head has dimension d_k = d_v = d_model / h = 64, with d_model = 512.",
+    "success": false,
+    "evaluation_complete": true,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 15,
+    "retrieval_context_unique_chunks": 5,
+    "retrieval_context_chars": 11601,
+    "route": "retrieve",
+    "retrieval_attempts": 3,
+    "rewrite_count": 0,
+    "is_relevant": null,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 0.670995670995671,
+        "passed": false,
+        "reason": "The score is 0.67 because while the first and second nodes in the retrieval contexts are correctly relevant by stating that 'we employ h = 8 parallel attention layers, or heads' and 'dk = dv = dmodel/h = 64' as well as 'all sub-layers in the model, as well as the embedding layers, produce outputs of dimension dmodel = 512', the third and fourth nodes are irrelevant because 'The text only defines attention functions in general and does not mention the number of attention heads or their dimensions' and 'It describes Scaled Dot-Product Attention formulas but does not provide the specific number of heads or head dimensions for the base model', which should ideally be ranked lower than the relevant nodes."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all information regarding the base model's 8 parallel attention heads, dimensions, and d_model = 512 is fully supported by node(s) in retrieval context 1 and 2!"
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0.39215686274509803,
+        "passed": false,
+        "reason": "The score is 0.39 because while the context contains relevant statements like 'The model uses h = 8 parallel attention layers, or heads.' and 'For each head they use dk = dv = dmodel/h = 64.', it is diluted by a significant amount of irrelevant information such as 'The Law will never be perfect, but its application should be just - this is what we are missing, in my opinion.' and general definitions of attention mechanisms."
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the output directly and accurately answers both parts of the input regarding the number of attention heads and their dimensions without including any irrelevant information."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output aligns perfectly with the retrieval context without any contradictions!"
+      }
+    ]
+  },
+  {
+    "input": "Why does the Transformer use multi-head attention instead of a single attention function?",
+    "actual_output": "The paper explains that the Transformer uses **multi‑head attention** so that the model can look at the input from several different “perspectives” at the same time.  \nWith a single attention head the query, key and value vectors are projected into one space, and the resulting attention weights are an average over all the information that could be useful. This averaging tends to blur or lose fine‑grained patterns that might be important for different aspects of the sentence (e.g., syntax, semantics, coreference, etc.).\n\nBy splitting the attention into **h parallel heads** (the paper uses \\(h = 8\\)), each head projects the queries, keys and values into a smaller sub‑space (\\(d_k = d_v = d_{\\text{model}}/h\\)). Each head can therefore learn to focus on a distinct type of relationship or feature in the data. After the heads compute their individual attention outputs, the results are concatenated and linearly projected back to the full dimensionality. This design lets the model jointly attend to information from multiple representation subspaces at different positions, capturing richer patterns without a significant increase in computational cost.\n\nIn short, multi‑head attention is used to avoid the loss of information that occurs with a single averaged attention head and to enable the model to learn diverse, complementary attention patterns simultaneously.",
+    "expected_output": "Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.",
+    "success": false,
+    "evaluation_complete": true,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 5,
+    "retrieval_context_unique_chunks": 5,
+    "retrieval_context_chars": 3721,
+    "route": "retrieve",
+    "retrieval_attempts": 1,
+    "rewrite_count": 0,
+    "is_relevant": true,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the first node in the retrieval contexts is correctly ranked at the top, stating that 'Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.' Meanwhile, the irrelevant nodes that discuss 'the three different ways the Transformer uses multi-head attention rather than explaining why multi-head attention is used', 'the general definition of an attention function', 'attention heads involved in anaphora resolution', and 'sentence structure and attention heads in layer 5' are appropriately ranked lower."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all sentences in the expected output are fully supported by the 1st node in retrieval context."
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0.08333333333333333,
+        "passed": false,
+        "reason": "The score is 0.08 because while there is a relevant statement explaining that 'Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions, whereas a single attention head inhibits this through averaging', the context is mostly filled with irrelevant implementation details and unrelated text like 'The Law will never be perfect, but its application should be just'."
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output directly and comprehensively addresses the input regarding multi-head attention without including any irrelevant statements."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output is completely faithful to the retrieval context with no contradictions found. Great job!"
+      }
+    ]
+  },
+  {
+    "input": "In what three ways is multi-head attention used in the Transformer?",
+    "actual_output": "**The Transformer employs multi‑head attention in three distinct contexts:**\n\n1. **Encoder‑decoder attention** –  \n   *Queries* come from the previous decoder layer, while the *keys* and *values* come from the encoder’s output.  \n   This lets every decoder position attend to all positions in the input sequence.\n\n2. **Encoder self‑attention** –  \n   All *queries, keys,* and *values* are derived from the same source: the output of the previous encoder layer.  \n   Each encoder position can attend to every other position in the preceding encoder layer.\n\n3. **Decoder self‑attention** –  \n   Again, *queries, keys,* and *values* come from the decoder, but the attention is masked so that a position can only attend to itself and earlier positions (preventing “look‑ahead” information).  \n\nThese three uses—encoder‑decoder, encoder self‑attention, and decoder self‑attention—constitute the full application of multi‑head attention in the Transformer architecture.",
+    "expected_output": "First, in encoder-decoder attention layers, the queries come from the previous decoder layer while the keys and values come from the encoder output. Second, the encoder contains self-attention layers where keys, values and queries all come from the previous encoder layer. Third, decoder self-attention layers let each position attend to earlier positions in the decoder, with masking to prevent leftward information flow.",
+    "success": false,
+    "evaluation_complete": true,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 15,
+    "retrieval_context_unique_chunks": 6,
+    "retrieval_context_chars": 12075,
+    "route": "retrieve",
+    "retrieval_attempts": 3,
+    "rewrite_count": 0,
+    "is_relevant": null,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 0.670995670995671,
+        "passed": false,
+        "reason": "The score is 0.67 because while the relevant nodes correctly appeared at the top, such as the first node stating 'It introduces section '3.2.3 Applications of Attention in our Model' stating 'The Transformer uses multi-head attention in three different ways',' several irrelevant nodes discussing general encoder and decoder stacks were ranked higher than they should have been."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all sentences in the expected output are fully supported by the nodes in retrieval context (specifically the 2nd node), demonstrating perfect contextual recall!"
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0.2978723404255319,
+        "passed": false,
+        "reason": "The score is 0.30 because while the context contains relevant statements such as 'The Transformer uses multi-head attention in three different ways: In encoder-decoder attention layers, the queries come from the previous decoder layer', it is heavily diluted by irrelevant information like 'The retrieval context contained the information \"output values. These are concatenated and once again projected, resulting in the final values, as depicted in Figure 2.\" when it has nothing to do with the three ways multi-head attention is used.'"
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output directly and accurately addresses all three ways multi-head attention is used in the Transformer without any irrelevant information."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the output is completely accurate and perfectly aligned with the retrieval context."
+      }
+    ]
+  },
+  {
+    "input": "How does the Transformer represent the order of words when it has no recurrence or convolution?",
+    "actual_output": "I wasn't able to find relevant information in the uploaded papers to answer your question. You may want to rephrase your question or upload additional papers.",
+    "expected_output": "It adds positional encodings to the input embeddings at the bottom of the encoder and decoder stacks. The encodings use sine and cosine functions of different frequencies. The authors also tried learned positional embeddings and found nearly identical results.",
+    "success": false,
+    "evaluation_complete": true,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": false,
+    "retrieval_context_chunks": 0,
+    "retrieval_context_unique_chunks": 0,
+    "retrieval_context_chars": 0,
+    "route": "retrieve",
+    "retrieval_attempts": 0,
+    "rewrite_count": 1,
+    "is_relevant": false,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 0,
+        "passed": false,
+        "reason": "The score is 0.00 because no retrieval contexts were found to answer the input."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 0.0,
+        "passed": false,
+        "reason": "The score is 0.00 because the retrieval context is empty, resulting in none of the sentences in the expected output being attributable to any nodes in the retrieval context."
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0,
+        "passed": false,
+        "reason": "The score is 0.00 because the retrieval context contains no relevant statements to answer how the Transformer represents word order without recurrence or convolution."
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 0.0,
+        "passed": false,
+        "reason": "The score is 0.00 because the actual output completely failed to answer the question about how the Transformer represents word order, instead making irrelevant statements about failing to find information and suggesting rephrasing or uploading papers."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output is completely faithful to the retrieval context with no contradictions found. Great job!"
+      }
+    ]
+  },
+  {
+    "input": "What are the model dimension and the feed-forward inner-layer dimension in the base model?",
+    "actual_output": "- **Model dimension (dmodel):** 512  \n- **Feed‑forward inner‑layer dimension (dff):** 2048",
+    "expected_output": "The base model has d_model = 512. The position-wise feed-forward network consists of two linear transformations with a ReLU activation in between, and its inner layer has dimensionality d_ff = 2048.",
+    "success": false,
+    "evaluation_complete": true,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 5,
+    "retrieval_context_unique_chunks": 5,
+    "retrieval_context_chars": 4610,
+    "route": "retrieve",
+    "retrieval_attempts": 1,
+    "rewrite_count": 0,
+    "is_relevant": true,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 0.7000000000000001,
+        "passed": true,
+        "reason": "The score is 0.70 because the first node in the retrieval contexts correctly provides the model dimension value by stating 'all sub-layers in the model, as well as the embedding layers, produce outputs of dimension dmodel = 512.' and the fourth node directly provides both required dimensions, stating 'The dimensionality of input and output is dmodel = 512, and the inner-layer has dimensionality dff = 2048.' However, the score is not higher because the irrelevant second node, which discusses maximum path lengths and complexities in Table 1 and mentions positional encodings, and the third node, which talks about the decoder stack and attention mechanisms without providing the model or feed-forward inner-layer dimensions, were ranked higher than the fourth relevant node in the retrieval contexts."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because every detail regarding the base model's dimensions and the feed-forward network in the expected output is fully supported by node(s) in retrieval context 1, 4, and 5."
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0.21052631578947367,
+        "passed": false,
+        "reason": "The score is 0.21 because while the context mentions 'The dimensionality of input and output is dmodel = 512, and the inner-layer has dimensionality dff = 2048', the vast majority of the retrieval context is irrelevant, containing general architectural descriptions such as 'The Transformer follows this overall architecture using stacked self-attention' and 'An attention function can be described as mapping a query and a set of key-value pairs to an output' which do not specify the model dimensions."
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output directly and accurately addresses the input without including any irrelevant information."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output is completely faithful to the retrieval context with no contradictions found."
+      }
+    ]
+  },
+  {
+    "input": "Which optimizer and learning rate schedule were used to train the Transformer?",
+    "actual_output": "I wasn't able to find relevant information in the uploaded papers to answer your question. You may want to rephrase your question or upload additional papers.",
+    "expected_output": "The Adam optimizer was used with beta1 = 0.9, beta2 = 0.98 and epsilon = 10^-9. The learning rate was increased linearly for the first warmup_steps = 4000 training steps and then decreased proportionally to the inverse square root of the step number.",
+    "success": false,
+    "evaluation_complete": true,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 4,
+    "retrieval_context_unique_chunks": 4,
+    "retrieval_context_chars": 3736,
+    "route": "retrieve",
+    "retrieval_attempts": 1,
+    "rewrite_count": 1,
+    "is_relevant": false,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the first node in the retrieval contexts is ranked highest and correctly answers the question by stating 'We used the Adam optimizer [20] with beta1 = 0.9, beta2 = 0.98 and epsilon = 10^-9' and explaining the learning rate schedule. Meanwhile, all irrelevant nodes containing only references like '[20] Diederik Kingma and Jimmy Ba. Adam...' or unrelated details like 'We trained on the standard WMT 2014 English-German dataset' are correctly ranked lower, resulting in a flawless ranking!"
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all sentences in the expected output are fully supported by node(s) in the retrieval context."
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0.18181818181818182,
+        "passed": false,
+        "reason": "The score is 0.18 because while the context includes specific statements like 'We used the Adam optimizer [20] with beta1 = 0.9, beta2 = 0.98 and epsilon = 10^-9.' and formulas for the learning rate schedule, it is overwhelmingly dominated by irrelevant information about hardware details, training steps, datasets, and bibliography entries."
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the output directly and accurately addresses the input without any irrelevant information."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output aligns perfectly with the retrieval context without any contradictions!"
+      }
+    ]
+  },
+  {
+    "input": "What regularization techniques were used during training?",
+    "actual_output": "I wasn't able to find relevant information in the uploaded papers to answer your question. You may want to rephrase your question or upload additional papers.",
+    "expected_output": "Two techniques were used: residual dropout and label smoothing. Dropout was applied to the output of each sub-layer before it is added to the sub-layer input and normalized, and also to the sums of embeddings and positional encodings, with P_drop = 0.1 for the base model. Label smoothing with epsilon_ls = 0.1 was also used.",
+    "success": false,
+    "evaluation_complete": true,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": false,
+    "retrieval_context_chunks": 0,
+    "retrieval_context_unique_chunks": 0,
+    "retrieval_context_chars": 0,
+    "route": "retrieve",
+    "retrieval_attempts": 0,
+    "rewrite_count": 1,
+    "is_relevant": false,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 0,
+        "passed": false,
+        "reason": "The score is 0.00 because no retrieval contexts were returned to answer the question about regularization techniques."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 0.0,
+        "passed": false,
+        "reason": "The score is 0.00 because all sentences in the expected output lack corresponding information in the nodes in the retrieval context."
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0,
+        "passed": false,
+        "reason": "The score is 0.00 because the retrieval context contains no relevant statements to answer the input regarding regularization techniques."
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all statements in the actual output directly and accurately address the regularization techniques used during training without any irrelevant information."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output is completely faithful to the retrieval context with no contradictions found. Great job!"
+      }
+    ]
+  },
+  {
+    "input": "Which dataset and hardware were used to train the base model, and how long did training take?",
+    "actual_output": "**Base‑model training**\n\n| Item | Details |\n|------|---------|\n| **Dataset** | WMT 2014 English‑German (≈ 4.5 million sentence pairs) |\n| **Hardware** | One machine equipped with **8 NVIDIA P100 GPUs** |\n| **Training duration** | **100 000 steps**, which equates to about **12 hours** of training time |",
+    "expected_output": "The models were trained on the WMT 2014 English-German dataset of about 4.5 million sentence pairs, encoded with byte-pair encoding and a shared source-target vocabulary of about 37000 tokens. Training was done on one machine with 8 NVIDIA P100 GPUs. The base model was trained for 100,000 steps, about 12 hours, at roughly 0.4 seconds per step.",
+    "success": false,
+    "evaluation_complete": true,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 15,
+    "retrieval_context_unique_chunks": 5,
+    "retrieval_context_chars": 13596,
+    "route": "retrieve",
+    "retrieval_attempts": 3,
+    "rewrite_count": 0,
+    "is_relevant": null,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 0.670995670995671,
+        "passed": false,
+        "reason": "The score is 0.67 because the first and second nodes in the retrieval contexts correctly provide the dataset details ('We trained on the standard WMT 2014 English-German dataset consisting of about 4.5 million sentence pairs') and training duration ('We trained the base models for a total of 100,000 steps or 12 hours'). However, the score is not higher because the third, fourth, and fifth nodes in the retrieval contexts contain irrelevant information discussing translation costs, English-to-French tasks, and the Transformer architecture instead of being ranked lower than the relevant nodes."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all sentences in the expected output are fully supported by the information found in node(s) in retrieval context 1 and 2."
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0.24096385542168675,
+        "passed": false,
+        "reason": "The score is 0.24 because while the context includes relevant statements such as 'The models were trained on the standard WMT 2014 English-German dataset' and 'We trained our models on one machine with 8 NVIDIA P100 GPUs,' it is largely diluted by irrelevant details regarding big models, such as 'The big models were trained for 300,000 steps (3.5 days),' and unrelated inference and hyperparameter settings."
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output directly and accurately addresses every part of the input regarding the dataset, hardware, and training duration without any irrelevant information."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output is completely faithful to the retrieval context with no contradictions found. Great job!"
+      }
+    ]
+  },
+  {
+    "input": "What BLEU score did the big Transformer achieve on the WMT 2014 English-to-German translation task?",
+    "actual_output": "The big Transformer achieved a BLEU score of **28.4** on the WMT 2014 English‑to‑German translation task.",
+    "expected_output": "The big Transformer reached 28.4 BLEU on WMT 2014 English-to-German, outperforming the best previously reported models, including ensembles, by more than 2.0 BLEU. The base model scored 27.3 BLEU.",
+    "success": false,
+    "evaluation_complete": true,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 9,
+    "retrieval_context_unique_chunks": 3,
+    "retrieval_context_chars": 8586,
+    "route": "retrieve",
+    "retrieval_attempts": 3,
+    "rewrite_count": 0,
+    "is_relevant": null,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 0.8357142857142857,
+        "passed": true,
+        "reason": "The score is 0.84 because while the first, second, fourth, fifth, seventh, and eighth nodes in the retrieval contexts are correctly ranked higher by providing the relevant information that 'On the WMT 2014 English-to-German translation task, the big transformer model... establishing a new state-of-the-art BLEU score of 28.4' and the table data showing 'Transformer (big) 28.4', the score is not higher because irrelevant nodes such as the third node, which 'discusses the French translation task and hyperparameters, which are not needed for the English-to-German BLEU score question', are interspersed among the relevant ones instead of being ranked lower."
+      },
+      {
+        "name": "Contextual Recall",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because all information in the expected output is fully and accurately supported by the node(s) in retrieval context."
+      },
+      {
+        "name": "Contextual Relevancy",
+        "score": 0.4090909090909091,
+        "passed": false,
+        "reason": "The score is 0.41 because while the context includes relevant statements such as 'Transformer (big) model achieved 28.4 BLEU score on EN-DE', it also contains a large amount of irrelevant information about the English-to-French task, dropout rates, and training details like 'Training took 3.5 days on 8 P100 GPUs.'"
+      },
+      {
+        "name": "Answer Relevancy",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output directly and accurately addresses the input without containing any irrelevant statements."
+      },
+      {
+        "name": "Faithfulness",
+        "score": 1.0,
+        "passed": true,
+        "reason": "The score is 1.00 because the actual output is completely faithful to the retrieval context with no contradictions detected. Great job!"
+      }
+    ]
+  },
+  {
+    "input": "Why did the authors choose self-attention over recurrent and convolutional layers, and how do they compare?",
+    "actual_output": "**Why the authors went with self‑attention**\n\n1. **Speed and parallelism**  \n   * A self‑attention layer can be computed in a single matrix‑multiplication, so all pairwise interactions in a sequence are evaluated in parallel.  \n   * Recurrent layers (LSTM/GRU) require *O(n)* sequential operations – each step depends on the previous one.  \n   * Convolutional layers need *O(k·n)* operations, where *k* is the kernel size; even with dilated convolutions the longest path between two positions grows logarithmically, so distant dependencies are harder to learn.\n\n2. **Long‑range dependencies**  \n   * Self‑attention gives every token a direct, constant‑time connection to every other token.  \n   * Recurrent and convolutional models must propagate information through many intermediate steps, which makes it harder to capture long‑distance relationships.\n\n3. **Computational complexity**  \n   * Self‑attention: *O(n²·d)* per layer (where *d* is the hidden dimension).  \n   * Recurrent: *O(n·d²)* (because of the matrix‑vector multiplications in each step).  \n   * Convolutional: *O(k·n·d + n·d²)*; with separable convolutions the cost drops to *O(k·n·d + n·d²)*, but even with *k = n* it is essentially the same as a self‑attention layer plus a point‑wise feed‑forward network – the architecture the authors actually use.\n\n4. **Interpretability**  \n   * The attention weights can be inspected to see which tokens influence each other. The authors found that different heads learn distinct linguistic patterns (syntactic, semantic, etc.), giving a clearer view of what the model is doing.\n\n5. **Extrapolation to longer sequences**  \n   * Using sinusoidal positional embeddings (instead of learned ones) allows the model to generalise to sequence lengths longer than those seen during training, a property that is harder to guarantee with recurrent or convolutional architectures.\n\n**How the three families compare (as summarised in the paper)**\n\n| Property | Recurrent | Convolutional | Self‑Attention |\n|----------|-----------|---------------|----------------|\n| **Per‑layer complexity** | *O(n·d²)* | *O(k·n·d + n·d²)* | *O(n²·d)* |\n| **Parallelism** | Sequential (O(n) ops) | Parallel over *k* positions (O(k) ops) | Fully parallel (O(1) ops) |\n| **Long‑range dependency handling** | Requires many steps; hard to learn | Dilated convs help but still limited | Direct, constant‑time connections |\n| **Effective resolution** | High (each step processes one token) | Limited by kernel size | High, but mitigated by multi‑head attention |\n| **Interpretability** | Low (hidden states opaque) | Moderate (filters can be visualised) | High (attention maps are explicit) |\n| **Extrapolation to longer sequences** | Poor (depends on training length) | Poor | Good with sinusoidal positions |\n\nIn short, the authors chose self‑attention because it offers **faster, fully parallel computation**, **direct access to all positions** (making long‑range dependencies easier to learn), **better interpretability**, and **the ability to extrapolate to longer sequences**. While its raw quadratic cost can be higher than a single recurrent or convolutional layer, the overall architecture (self‑attention + feed‑forward + residuals) is more efficient and effective for the sequence‑to‑sequence tasks they study.",
+    "expected_output": "The authors compared the layer types on three criteria: total computational complexity per layer, the amount of computation that can be parallelized (the minimum number of sequential operations), and the path length between long-range dependencies in the network. A self-attention layer connects all positions with a constant number of sequential operations and a maximum path length of O(1), whereas a recurrent layer needs O(n) sequential operations. Self-attention is also faster than recurrent layers when the sequence length n is smaller than the representation dimensionality d.",
+    "success": null,
+    "evaluation_complete": false,
+    "answering_model": "openai/gpt-oss-20b",
+    "judge_model": "gemini-3.5-flash-lite",
+    "has_retrieval_context": true,
+    "retrieval_context_chunks": 5,
+    "retrieval_context_unique_chunks": 5,
+    "retrieval_context_chars": 3936,
+    "route": "retrieve",
+    "retrieval_attempts": 1,
+    "rewrite_count": 0,
+    "is_relevant": true,
+    "metrics": [
+      {
+        "name": "Contextual Precision",
+        "score": 0.9166666666666666,
+        "passed": true,
+        "reason": "The score is 0.92 because the first node is relevant since \"It mentions that a 'recurrent layer requires O(n) sequential operations' and compares computational complexity.\", the second node is relevant since \"It states that 'we consider three desiderata' including 'total computational complexity per layer' and 'the amount of computation that can be parallelized'.\", and the fourth node is relevant since \"It discusses path lengths and how 'in the Transformer this is reduced to a constant number of operations', matching the expected output regarding path length.\". However, the score is not higher because the third node is irrelevant since \"It discusses separable convolutions and interpretable models, which are not directly answering the comparison criteria for why self-attention was chosen over recurrent/convolutional layers in the expected output.\", and the fifth node is also irrelevant since \"It only contains references and bibliography entries, which are completely irrelevant to the question.\", and these irrelevant nodes are ranked ahead of or mixed among the relevant ones."
+      }
+    ]
+  }
+]
